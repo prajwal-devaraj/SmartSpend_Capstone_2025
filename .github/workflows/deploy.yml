@@ -1,4 +1,4 @@
-name: Deploy to Cassini
+name: Deploy SmartSpend (Backend + Frontend)
 
 on:
   push:
@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      ############################################################
+      # 1. COPY ALL FILES TO SERVER
+      ############################################################
       - name: Copy project files to Cassini
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -21,15 +24,42 @@ jobs:
           source: "."
           target: "/home/${{ secrets.CASSINI_USER }}/web/smartspend"
 
-      - name: Restart SmartSpend backend on Cassini
+      ############################################################
+      # 2. START BACKEND (Flask)
+      ############################################################
+      - name: Restart Backend (Flask)
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.CASSINI_HOST }}
           username: ${{ secrets.CASSINI_USER }}
           key: ${{ secrets.CASSINI_PRIVATE_KEY }}
           script: |
-            cd ~/web/smartspend
-            pip install --user -r requirements.txt
-            screen -S ${{ secrets.CASSINI_USER }} -X quit || true
-            screen -dmS ${{ secrets.CASSINI_USER }} python3 app.py
+            cd ~/web/smartspend/SmartSpend_backend
 
+            echo "Installing backend Python dependencies..."
+            pip install --user -r requirements.txt
+
+            echo "Restarting backend screen..."
+            screen -S smartspend-backend -X quit || true
+            screen -dmS smartspend-backend python3 manage.py
+
+      ############################################################
+      # 3. START FRONTEND (Vite + React)
+      ############################################################
+      - name: Restart Frontend (Vite React App)
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.CASSINI_HOST }}
+          username: ${{ secrets.CASSINI_USER }}
+          key: ${{ secrets.CASSINI_PRIVATE_KEY }}
+          script: |
+            cd ~/web/smartspend/SmartSpend_Frontend-main
+
+            echo "Installing frontend dependencies..."
+            npm install
+
+            echo "Stopping old frontend screen..."
+            screen -S smartspend-frontend -X quit || true
+
+            echo "Starting Vite dev server on port 5173..."
+            screen -dmS smartspend-frontend npm run dev -- --host 0.0.0.0
