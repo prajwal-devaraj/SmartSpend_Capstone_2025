@@ -1,0 +1,34 @@
+name: Deploy to Cassini
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy project files to Cassini
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.CASSINI_HOST }}
+          username: ${{ secrets.CASSINI_USER }}
+          key: ${{ secrets.CASSINI_PRIVATE_KEY }}
+          source: "."
+          target: "/home/${{ secrets.CASSINI_USER }}/web/smartspend"
+
+      - name: Restart SmartSpend backend on Cassini
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.CASSINI_HOST }}
+          username: ${{ secrets.CASSINI_USER }}
+          key: ${{ secrets.CASSINI_PRIVATE_KEY }}
+          script: |
+            cd ~/web/smartspend
+            pip install --user -r requirements.txt
+            screen -S ${{ secrets.CASSINI_USER }} -X quit || true
+            screen -dmS ${{ secrets.CASSINI_USER }} python3 app.py
