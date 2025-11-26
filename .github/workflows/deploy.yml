@@ -2,7 +2,7 @@ name: Deploy to Cassini
 
 on:
   push:
-    branches: ["main"]
+    branches: ["Prajwal-Devaraj"]
 
 jobs:
   deploy:
@@ -32,3 +32,4 @@ jobs:
             pip install --user -r requirements.txt
             screen -S ${{ secrets.CASSINI_USER }} -X quit || true
             screen -dmS ${{ secrets.CASSINI_USER }} python3 app.py
+
