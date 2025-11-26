@@ -1,1 +1,2 @@
 # test deploy success
+deploy ok
