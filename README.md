@@ -1,13 +1,5 @@
 # SMARTSPEND — THE EMOTION-AWARE CASH-FLOW COACH 
 
-![Build](https://img.shields.io/badge/build-stable-brightgreen)
-![Frontend](https://img.shields.io/badge/frontend-React%20%7C%20TypeScript-blue)
-![Backend](https://img.shields.io/badge/backend-Flask%20%7C%20SQLAlchemy-orange)
-![Database](https://img.shields.io/badge/database-MySQL-informational)
-![ML](https://img.shields.io/badge/ML-Scikit--Learn-purple)
-![Status](https://img.shields.io/badge/status-live-success)
-![License](https://img.shields.io/badge/license-Academic-lightgrey)
-
 ---
 
 ## Project Overview
@@ -213,7 +205,7 @@ SmartSpend/
 ## Appendices
 
 - **GitHub Repository:**  
-  https://github.com/prajwal-devaraj/Smartspend  
+  https://github.com/prajwal-devaraj/SmartSpend_Capstone_2025.git  
 
 - **Sample API Responses & Automated Test Scripts:**  
 
