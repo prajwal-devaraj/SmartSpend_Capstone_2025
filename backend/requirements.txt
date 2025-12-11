@@ -8,3 +8,5 @@ passlib[bcrypt]==1.7.4
 pydantic==2.9.2
 tzdata>=2024.1
 gunicorn
+joblib
+scikit-learn
