@@ -229,5 +229,5 @@ SmartSpend/
 ## Conclusion
 
 SmartSpend demonstrates how **modern web technologies**, **machine learning**, and **behavioral analytics** can be combined to create an intelligent personal finance platform.  
-Unlike traditional budgeting tools that only track expenses, SmartSpend focuses on understanding the **underlying reasons behind spending behavior**, making it both **technically robust** and **socially impactful**.
+Unlike traditional budgeting tools that only track expenses, SmartSpend focuses on understanding the **underlying reasons behind spending behavior**, making it both **technically robust** and **socially impactful**..
 
